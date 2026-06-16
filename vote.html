@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cast Your Vote</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.position-section{
+    margin:30px 0;
+    background:rgba(255,255,255,0.95);
+    padding:20px;
+    border-radius:15px;
+}
+
+.position-title{
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:20px;
+    color:#0f172a;
+}
+
+.candidate-row{
+    display:flex;
+    gap:20px;
+    overflow-x:auto;
+    padding-bottom:10px;
+}
+
+.candidate-card{
+    min-width:220px;
+    background:white;
+    border-radius:15px;
+    padding:15px;
+    text-align:center;
+    box-shadow:0 0 10px rgba(0,0,0,0.15);
+}
+
+.candidate-photo{
+    width:100%;
+    height:180px;
+    background:#e5e7eb;
+    border-radius:10px;
+    margin-bottom:10px;
+}
+
+.candidate-name{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.candidate-class{
+    color:#555;
+    margin:5px 0 10px;
+}
+
+.review-btn{
+    margin-top:30px;
+    width:100%;
+}
+
+.instructions{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:20px;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<img src="logo.png" alt="School Logo" class="logo">
+
+<div class="election-banner">
+CAST YOUR VOTE
+</div>
+
+<div class="voter-info">
+
+<h3>👤 Voter Information</h3>
+
+<p><strong>Name:</strong> <span id="voterName"></span></p>
+
+<p><strong>Type:</strong> <span id="voterType"></span></p>
+
+<p id="classRow">
+<strong>Class:</strong> <span id="voterClass"></span>
+</p>
+
+</div>
+</div>
+
+<div class="instructions">
+
+<h2 style="text-align:center;color:#0f172a;">
+🗳 Election Voting Guidelines
+</h2>
+
+<div class="instruction-grid">
+
+<div class="instruction-box">
+
+<h3>📋 Voting Rules</h3>
+
+<p>✔ Head Boy - Select 1 Candidate</p>
+<p>✔ Head Girl - Select 1 Candidate</p>
+<p>✔ Jr Head Boy - Select 1 Candidate</p>
+<p>✔ Jr Head Girl - Select 1 Candidate</p>
+
+</div>
+
+<div class="instruction-box">
+
+<h3>⭐ Important Information</h3>
+<p>✔ House Captain - Select 4 Candidates</p>
+<p>✔ Discipline Incharge - Select 4 Candidates</p>
+<p>✔ Sports Captain - Select 4 Candidates</p>
+<p>✔ Peer Leaders - Maximum 8 Candidates</p>
+
+</div>
+
+</div>
+
+<div class="warning-box">
+⚠ Please review your selections carefully. Once your vote is submitted, it cannot be changed.
+</div>
+
+</div>
+
+<!-- HEAD BOY -->
+
+<div class="position-section">
+
+<div class="position-title">👑 Head Boy</div>
+
+<div class="candidate-row" id="headBoyContainer">
+
+</div>
+
+</div>
+
+<!-- HEAD GIRL -->
+
+<!-- HEAD GIRL -->
+
+<div class="position-section">
+
+<div class="position-title">👑 Head Girl</div>
+
+<div class="candidate-row" id="headGirlContainer">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Jr section -->
+
+<div class="position-section">
+
+<div class="position-title">👦 Jr Head Boy</div>
+
+<div class="candidate-row" id="jrHeadBoyContainer"></div>
+
+</div>
+
+<div class="position-section">
+
+<div class="position-title">👧 Jr Head Girl</div>
+
+<div class="candidate-row" id="jrHeadGirlContainer"></div>
+
+</div>
+
+<div class="position-section">
+
+<div class="position-title">🌞 Jr Head Boy Afternoon</div>
+
+<div class="candidate-row" id="jrHeadBoyAfternoonContainer"></div>
+
+</div>
+
+<div class="position-section">
+
+<div class="position-title">🌞 Jr Head Girl Afternoon</div>
+
+<div class="candidate-row" id="jrHeadGirlAfternoonContainer"></div>
+
+</div>
+
+<!-- HOUSE CAPTAIN -->
+
+
+<div class="position-section">
+
+<div class="position-title">🏠 House Captain (Select 4)</div>
+
+<div class="candidate-row" id="houseCaptainContainer">
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+<!-- DISCIPLINE -->
+
+<div class="position-section">
+
+<div class="position-title">📋 Discipline Incharge (Select 4)</div>
+
+<div class="candidate-row" id="disciplineContainer">
+
+</div>
+</div>
+
+</div>
+
+<!-- SPORTS -->
+
+<div class="position-section">
+
+<div class="position-title">🏆 Sports Captain (Select 4)</div>
+
+<div class="candidate-row" id="sportsContainer">
+
+</div>
+
+</div>
+
+<!-- PEER LEADERS -->
+
+<div class="position-section">
+
+<div class="position-title">🤝 Peer Leaders (Maximum 8)</div>
+
+<div class="candidate-row" id="peerContainer">
+
+</div>
+
+</div>
+</div>
+
+<button class="review-btn" onclick="validateVote()">
+Review My Vote
+</button>
+
+</div>
+<script>
+
+function validateVote(){
+
+const headBoy =
+document.querySelector('input[name="headBoy"]:checked');
+
+const headGirl =
+document.querySelector('input[name="headGirl"]:checked');
+
+if(!headBoy){
+    alert("Please select a Head Boy.");
+    return;
+}
+
+if(!headGirl){
+    alert("Please select a Head Girl.");
+    return;
+}
+
+const jrHeadBoy =
+document.querySelector('input[name="jrHeadBoy"]:checked');
+
+const jrHeadGirl =
+document.querySelector('input[name="jrHeadGirl"]:checked');
+
+if(!jrHeadBoy){
+    alert("Please select Jr Head Boy.");
+    return;
+}
+
+if(!jrHeadGirl){
+    alert("Please select Jr Head Girl.");
+    return;
+}
+const houseCaptain =
+Array.from(
+document.querySelectorAll(
+'input[name="houseCaptain"]:checked'
+)
+).map(x => x.value);
+
+const discipline =
+Array.from(
+document.querySelectorAll(
+'input[name="discipline"]:checked'
+)
+).map(x => x.value);
+
+const sports =
+Array.from(
+document.querySelectorAll(
+'input[name="sports"]:checked'
+)
+).map(x => x.value);
+if(sports.length > 4){
+    alert("You can select maximum 4 Sports Captains.");
+    return;
+}
+
+const peer =
+Array.from(
+document.querySelectorAll(
+'input[name="peer"]:checked'
+)
+).map(x => x.value);
+
+localStorage.setItem(
+"headBoy",
+headBoy.value
+);
+
+localStorage.setItem(
+"headGirl",
+headGirl.value
+);
+
+localStorage.setItem(
+"jrHeadBoy",
+jrHeadBoy.value
+);
+
+localStorage.setItem(
+"jrHeadGirl",
+jrHeadGirl.value
+);
+
+localStorage.setItem(
+"houseCaptain",
+JSON.stringify(houseCaptain)
+);
+
+localStorage.setItem(
+"discipline",
+JSON.stringify(discipline)
+);
+
+localStorage.setItem(
+"sports",
+JSON.stringify(sports)
+);
+
+localStorage.setItem(
+"peer",
+JSON.stringify(peer)
+);
+
+window.location.href =
+"review.html";
+
+}
+</script>
+
+<script>
+
+document.getElementById("voterName").innerText =
+    localStorage.getItem("voterName") || "-";
+
+document.getElementById("voterType").innerText =
+    localStorage.getItem("voterType") || "-";
+
+const voterClass =
+    localStorage.getItem("voterClass");
+
+if(voterClass){
+    document.getElementById("voterClass").innerText =
+        voterClass;
+}
+else{
+    document.getElementById("classRow").style.display =
+        "none";
+}
+
+</script>
+<script>
+
+fetch('./candidates.json')
+.then(res => res.json())
+.then(candidates => {
+
+console.log("Candidates Loaded:", candidates.length);
+
+// KEEP ALL YOUR EXISTING CODE BELOW THIS LINE
+
+const headBoys =
+candidates.filter(c =>
+String(c.Position)
+.trim()
+.toLowerCase() === "head boy"
+);
+
+let html = "";
+
+headBoys.forEach(function(candidate){
+
+html += `
+<div class="candidate-card">
+
+<div class="candidate-photo headboy-bg">
+<img
+src="./candidate-photos/${candidate.ID}.jpg"
+class="candidate-img"
+  onerror="
+    this.onerror=null;
+    this.src='./candidate-photos/${candidate.ID}.jpeg';
+    this.onerror=function(){
+      this.src='./candidate-photos/${candidate.ID}.jfif';
+    };
+  "
+>
+
+</div>
+
+<div class="candidate-name">
+${candidate.Name}
+</div>
+
+<div class="candidate-class">
+Class ${candidate.Class}
+</div>
+
+<input
+type="radio"
+name="headBoy"
+value="${candidate.Name}">
+
+</div>
+`;
+
+});
+
+document.getElementById(
+"headBoyContainer"
+).innerHTML = html;
+
+/* HEAD GIRL */
+
+const headGirls =
+candidates.filter(c =>
+String(c.Position)
+.trim()
+.toLowerCase() === "head girl"
+);
+
+let headGirlHtml = "";
+
+headGirls.forEach(function(candidate){
+
+headGirlHtml += `
+
+<div class="candidate-card">
+
+<div class="candidate-photo headgirl-bg">
+<img
+  src="./candidate-photos/${candidate.ID}.jpg"
+  style="width:100%;height:100%;object-fit:cover;border-radius:10px;"
+  onerror="
+    this.onerror=null;
+    this.src='./candidate-photos/${candidate.ID}.jpeg';
+    this.onerror=function(){
+      this.src='./candidate-photos/${candidate.ID}.jfif';
+    };
+  "
+>
+</div>
+
+<div class="candidate-name">
+${candidate.Name}
+</div>
+
+<div class="candidate-class">
+Class ${candidate.Class}
+</div>
+
+<input
+type="radio"
+name="headGirl"
+value="${candidate.Name}">
+
+</div>
+`;
+
+});
+
+document.getElementById(
+"headGirlContainer"
+).innerHTML = headGirlHtml;
+
+/* JR HEAD BOY */
+
+const jrHeadBoys =
+candidates.filter(c =>
+String(c.Position)
+.trim()
+.toLowerCase() === "jr head boy"
+);
+
+let jrHeadBoyHtml = "";
+
+jrHeadBoys.forEach(function(candidate){
+
+jrHeadBoyHtml += `
+
+<div class="candidate-card">
+
+<div class="candidate-photo jrheadboy-bg">
+<img
+  src="./candidate-photos/${candidate.ID}.jpg"
+  style="width:100%;height:100%;object-fit:cover;border-radius:10px;"
+  onerror="
+    this.onerror=null;
+    this.src='./candidate-photos/${candidate.ID}.jpeg';
+    this.onerror=function(){
+      this.src='./candidate-photos/${candidate.ID}.jfif';
+    };
+  "
+>
+</div>
+
+<div class="candidate-name">
+${candidate.Name}
+</div>
+
+<div class="candidate-class">
+Class ${candidate.Class}
+</div>
+
+<input
+type="radio"
+name="jrHeadBoy"
+value="${candidate.Name}">
+
+</div>
+`;
+
+});
+
+document.getElementById(
+"jrHeadBoyContainer"
+).innerHTML = jrHeadBoyHtml;
+
+
+/* JR HEAD GIRL */
+
+const jrHeadGirls =
+candidates.filter(c =>
+String(c.Position)
+.trim()
+.toLowerCase() === "jr head girl"
+);
+
+let jrHeadGirlHtml = "";
+
+jrHeadGirls.forEach(function(candidate){
+
+jrHeadGirlHtml += `
+
+<div class="candidate-card">
+
+<div class="candidate-photo jrheadgirl-bg">
+<img
+  src="./candidate-photos/${candidate.ID}.jpg"
+  style="width:100%;height:100%;object-fit:cover;border-radius:10px;"
+  onerror="
+    this.onerror=null;
+    this.src='./candidate-photos/${candidate.ID}.jpeg';
+    this.onerror=function(){
+      this.src='./candidate-photos/${candidate.ID}.jfif';
+    };
+  "
+>
+</div>
+
+<div class="candidate-name">
+${candidate.Name}
+</div>
+
+<div class="candidate-class">
+Class ${candidate.Class}
+</div>
+
+<input
+type="radio"
+name="jrHeadGirl"
+value="${candidate.Name}">
+
+</div>
+`;
+
+});
+
+document.getElementById(
+"jrHeadGirlContainer"
+).innerHTML = jrHeadGirlHtml;
+
+
+const jrHeadBoyAfternoon =
+candidates.filter(c =>
+String(c.Position)
+.trim()
+.toLowerCase() === "jr head boy afternoon"
+);
+
+let jrHeadBoyAfternoonHtml = "";
+
+jrHeadBoyAfternoon.forEach(candidate => {
+
+jrHeadBoyAfternoonHtml += `
+<div class="candidate-card">
+
+<div class="candidate-photo jrheadboy-bg">
+<img
+src="./candidate-photos/${candidate.ID}.jpg"
+style="width:100%;height:100%;object-fit:cover;border-radius:10px;"
+onerror="
+this.onerror=null;
+this.src='./candidate-photos/${candidate.ID}.jpeg';
+this.onerror=function(){
+this.src='./candidate-photos/${candidate.ID}.jfif';
+};
+">
+</div>
+
+<div class="candidate-name">${candidate.Name}</div>
+
+<div class="candidate-class">
+Class ${candidate.Class}
+</div>
+
+<input
+type="radio"
+name="jrHeadBoyAfternoon"
+value="${candidate.Name}">
+
+</div>
+`;
+
+});
+
+document.getElementById(
+"jrHeadBoyAfternoonContainer"
+).innerHTML = jrHeadBoyAfternoonHtml;
+
+
+const jrHeadGirlAfternoon =
+candidates.filter(c =>
+String(c.Position)
+.trim()
+.toLowerCase() === "jr head girl afternoon"
+);
+
+let jrHeadGirlAfternoonHtml = "";
+
+jrHeadGirlAfternoon.forEach(candidate => {
+
+jrHeadGirlAfternoonHtml += `
+<div class="candidate-card">
+
+<div class="candidate-photo jrheadgirl-bg">
+<img
+src="./candidate-photos/${candidate.ID}.jpg"
+style="width:100%;height:100%;object-fit:cover;border-radius:10px;"
+onerror="
+this.onerror=null;
+this.src='./candidate-photos/${candidate.ID}.jpeg';
+this.onerror=function(){
+this.src='./candidate-photos/${candidate.ID}.jfif';
+};
+">
+</div>
+
+<div class="candidate-name">${candidate.Name}</div>
+
+<div class="candidate-class">
+Class ${candidate.Class}
+</div>
+
+<input
+type="radio"
+name="jrHeadGirlAfternoon"
+value="${candidate.Name}">
+
+</div>
+`;
+
+});
+
+document.getElementById(
+"jrHeadGirlAfternoonContainer"
+).innerHTML = jrHeadGirlAfternoonHtml;
+
+const houseCaptains =
+candidates.filter(c =>
+String(c.Position)
+.trim()
+.toLowerCase() === "house captain"
+);
+
+let houseHtml = "";
+
+houseCaptains.forEach(function(candidate){
+
+houseHtml += `
+
+<div class="candidate-card">
+
+<div class="candidate-photo housecaptain-bg">
+<img
+  src="./candidate-photos/${candidate.ID}.jpg"
+  style="width:100%;height:100%;object-fit:cover;border-radius:10px;"
+  onerror="
+    this.onerror=null;
+    this.src='./candidate-photos/${candidate.ID}.jpeg';
+    this.onerror=function(){
+      this.src='./candidate-photos/${candidate.ID}.jfif';
+    };
+  "
+>
+</div>
+
+<div class="candidate-name">
+${candidate.Name}
+</div>
+
+<div class="candidate-class">
+Class ${candidate.Class}
+</div>
+
+<input
+type="checkbox"
+name="houseCaptain"
+value="${candidate.Name}">
+
+</div>
+`;
+
+});
+
+document.getElementById(
+"houseCaptainContainer"
+).innerHTML = houseHtml;
+
+/* DISCIPLINE */
+
+const disciplineCandidates =
+candidates.filter(c =>
+String(c.Position)
+.toLowerCase()
+.includes("discipline")
+);
+
+let disciplineHtml = "";
+
+disciplineCandidates.forEach(function(candidate){
+
+disciplineHtml += `
+<div class="candidate-card">
+
+<div class="candidate-photo discipline-bg">
+<img
+  src="./candidate-photos/${candidate.ID}.jpg"
+  style="width:100%;height:100%;object-fit:cover;border-radius:10px;"
+  onerror="
+    this.onerror=null;
+    this.src='./candidate-photos/${candidate.ID}.jpeg';
+    this.onerror=function(){
+      this.src='./candidate-photos/${candidate.ID}.jfif';
+    };
+  "
+>
+</div>
+
+<div class="candidate-name">
+${candidate.Name}
+</div>
+
+<div class="candidate-class">
+Class ${candidate.Class}
+</div>
+
+<input
+type="checkbox"
+name="discipline"
+value="${candidate.Name}">
+
+</div>
+`;
+
+});
+
+document.getElementById("disciplineContainer").innerHTML =
+disciplineHtml;
+/* SPORTS CAPTAIN */
+
+const sportsCandidates =
+candidates.filter(c =>
+String(c.Position)
+.toLowerCase()
+.includes("sports")
+);
+
+let sportsHtml = "";
+
+sportsCandidates.forEach(function(candidate){
+
+sportsHtml += `
+<div class="candidate-card">
+
+<div class="candidate-photo sportscaptain-bg">
+<img
+  src="./candidate-photos/${candidate.ID}.jpg"
+  style="width:100%;height:100%;object-fit:cover;border-radius:10px;"
+  onerror="
+    this.onerror=null;
+    this.src='./candidate-photos/${candidate.ID}.jpeg';
+    this.onerror=function(){
+      this.src='./candidate-photos/${candidate.ID}.jfif';
+    };
+  "
+>
+</div>
+
+<div class="candidate-name">
+${candidate.Name}
+</div>
+
+<div class="candidate-class">
+Class ${candidate.Class}
+</div>
+
+<input
+type="checkbox"
+name="sports"
+value="${candidate.Name}">
+
+</div>
+`;
+
+});
+
+document.getElementById("sportsContainer").innerHTML =
+sportsHtml;
+
+
+/* PEER LEADERS */
+
+const peerCandidates =
+candidates.filter(c =>
+String(c.Position)
+.toLowerCase()
+.includes("peer")
+);
+
+let peerHtml = "";
+
+peerCandidates.forEach(function(candidate){
+
+peerHtml += `
+<div class="candidate-card">
+
+<div class="candidate-photo peerleader-bg">
+<img
+  src="./candidate-photos/${candidate.ID}.jpg"
+  style="width:100%;height:100%;object-fit:cover;border-radius:10px;"
+  onerror="
+    this.onerror=null;
+    this.src='./candidate-photos/${candidate.ID}.jpeg';
+    this.onerror=function(){
+      this.src='./candidate-photos/${candidate.ID}.jfif';
+    };
+  "
+>
+</div>
+
+<div class="candidate-name">
+${candidate.Name}
+</div>
+
+<div class="candidate-class">
+Class ${candidate.Class}
+</div>
+
+<input
+type="checkbox"
+name="peer"
+value="${candidate.Name}">
+
+</div>
+`;
+
+});
+
+document.getElementById("peerContainer").innerHTML =
+peerHtml;
+});
+
+document.addEventListener("change", function(e){
+
+    if(e.target.name === "sports"){
+
+        const selected =
+        document.querySelectorAll(
+        'input[name="sports"]:checked'
+        );
+
+        if(selected.length > 4){
+
+            e.target.checked = false;
+
+            alert("You can select only 4 Sports Captains");
+        }
+    }
+
+});
+
+document.addEventListener("change", function(e){
+
+    if(e.target.name === "houseCaptain"){
+
+        const selected =
+        document.querySelectorAll(
+        'input[name="houseCaptain"]:checked'
+        );
+
+        if(selected.length > 4){
+
+            e.target.checked = false;
+
+            alert("You can select only 4 House Captains");
+        }
+    }
+
+});
+document.addEventListener("change", function(e){
+
+    if(e.target.name === "discipline"){
+
+        const selected =
+        document.querySelectorAll(
+        'input[name="discipline"]:checked'
+        );
+
+        if(selected.length > 4){
+
+            e.target.checked = false;
+
+            alert("You can select only 4 Discipline Incharges");
+        }
+    }
+
+});
+document.addEventListener("change", function(e){
+
+    if(e.target.name === "peer"){
+
+        const selected =
+        document.querySelectorAll(
+        'input[name="peer"]:checked'
+        );
+
+        if(selected.length > 8){
+
+            e.target.checked = false;
+
+            alert("Maximum 8 Peer Leaders");
+        }
+    }
+
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+}
+
+.admin-layout{
+    display:flex;
+    min-height:100vh;
+}
+
+.sidebar{
+    width:250px;
+    background:#0f172a;
+    color:white;
+    padding:20px;
+}
+
+.sidebar h2{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.sidebar ul{
+    list-style:none;
+    padding:0;
+}
+
+.sidebar ul li{
+    padding:15px;
+    margin-bottom:10px;
+    background:#1e293b;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.sidebar ul li:hover{
+    background:#334155;
+}
+
+.main-content{
+    flex:1;
+    padding:30px;
+    background:#f1f5f9;
+}
+
+.dashboard-title{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:20px;
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.stat-card{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.stat-number{
+    font-size:32px;
+    font-weight:bold;
+    color:#1e40af;
+}
+
+.section-card{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    margin-top:25px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.section-card h2{
+    margin-top:0;
+}
+
+input[type="file"]{
+    width:100%;
+    margin-top:10px;
+    margin-bottom:15px;
+}
+
+.upload-btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.export-btn{
+    background:#16a34a;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.logout-btn{
+    margin-top:20px;
+    width:100%;
+    background:#dc2626;
+    color:white;
+    border:none;
+    padding:12px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+
+<script>
+
+if(sessionStorage.getItem("adminLoggedIn") !== "yes"){
+    window.location.href = "admin-login.html";
+}
+
+function logout(){
+    sessionStorage.removeItem("adminLoggedIn");
+    window.location.href = "admin-login.html";
+}
+
+</script>
+
+<div class="admin-layout">
+
+<div class="sidebar">
+
+<h2>🏫 Admin Panel</h2>
+
+<ul>
+<li>📊 Dashboard</li>
+<li>👥 Candidates</li>
+<li>🖼 Photos</li>
+<li onclick="window.showVoteResults()">🗳 Votes</li>
+<li onclick="window.location.href='results.html'">
+📈 Results
+</li>
+<li onclick="openVoting()">🟢 Open Voting</li>
+<li onclick="closeVoting()">🔴 Close Voting</li>
+<li onclick="resetElection()">🗑 Reset Election Data</li>
+<li onclick="window.exportExcel()">
+📥 Export Excel
+</li>
+<li>⚙ Settings</li>
+</ul>
+
+<button class="logout-btn" onclick="logout()">
+Logout
+</button>
+
+</div>
+
+<div class="main-content">
+
+<div class="dashboard-title">
+Student Council Election 2026
+</div>
+
+<div class="stats">
+
+<div class="stat-card">
+<h3>Total Candidates</h3>
+<div class="stat-number">0</div>
+</div>
+
+<div class="stat-card">
+<h3>Total Votes</h3>
+<div class="stat-number" id="totalVotes">0</div>
+</div>
+
+<div class="stat-card">
+<h3>Students Voted</h3>
+<div class="stat-number" id="studentVotes">0</div>
+</div>
+
+<div class="stat-card">
+<h3>Teachers Voted</h3>
+<div class="stat-number" id="teacherVotes">0</div>
+</div>
+
+<div class="stat-card">
+<h3>Coordinators Voted</h3>
+<div class="stat-number" id="coordinatorVotes">0</div>
+</div>
+
+<div class="stat-card">
+<h3>Management Voted</h3>
+<div class="stat-number" id="managementVotes">0</div>
+</div>
+
+</div>
+
+<div class="section-card">
+
+<h2>👥 Upload Candidate Excel</h2>
+
+<input type="file"
+id="candidateExcel"
+accept=".xlsx,.xls,.csv">
+
+<button class="upload-btn" onclick="uploadExcel()">
+Upload Excel
+</button>
+
+<p id="excelStatus"
+style="color:green;font-weight:bold;">
+</p>
+
+<div id="candidatePreview"
+style="
+margin-top:15px;
+background:#f8fafc;
+padding:15px;
+border-radius:10px;
+overflow:auto;
+">
+No candidate data loaded.
+</div>
+
+
+<div class="section-card">
+
+<h2>🖼 Upload Candidate Photos</h2>
+
+<input
+type="file"
+id="candidatePhotos"
+multiple
+accept=".jpg,.jpeg,.png">
+
+<p style="color:#555;">
+Select all candidate photos together.<br>
+Photo name should match Candidate ID.<br>
+Example: 5001.jpg, 5002.jpg, 6001.jpg
+</p>
+
+<button class="upload-btn" onclick="uploadPhotos()">
+Upload Photos
+</button>
+
+<p id="photoStatus"
+style="color:green;font-weight:bold;">
+</p>
+
+<div id="photoPreview"
+style="
+margin-top:15px;
+background:#f8fafc;
+padding:15px;
+border-radius:10px;
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+">
+No photos uploaded.
+</div>
+
+
+<div class="section-card">
+
+<h2>🚀 Publish Election</h2>
+
+<p>
+After uploading candidate Excel and photos,
+click the button below to make the election live.
+</p>
+
+<button class="upload-btn" onclick="openVoting()">
+Publish Election
+</button>
+
+</div>
+
+</div>
+<div class="section-card">
+
+<h2>🗳 Election Status</h2>
+
+<p>Current Status: Closed</p>
+
+<button class="upload-btn">
+Open Election
+</button>
+
+<br><br>
+
+<button class="logout-btn">
+Close Election
+</button>
+
+</div>
+
+
+<div class="section-card">
+
+<h2>📈 Election Results</h2>
+
+<div id="adminResults">
+Loading results...
+</div>
+
+<h2>🏆 Winners</h2>
+
+<div id="winnerResults">
+Loading Winners...
+</div>
+
+</div>
+
+<div class="section-card" id="voteResultsSection" style="display:none;">
+
+<h2>🗳 Live Vote Results</h2>
+
+<div id="liveVoteResults">
+No data available.
+</div>
+
+<h2>🏆 Final Winners</h2>
+
+<div id="finalWinners">
+No winners declared yet.
+</div>
+
+</div>
+
+<div class="section-card">
+
+<h2>📥 Export Results</h2>
+
+<button id="exportBtn" class="export-btn">
+Download Excel Report
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    deleteDoc,
+    doc,
+    setDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDYyTfXiJm1JY_HdAtMUUQCgsuOMVERGjE",
+  authDomain: "school-voting-system-b3073.firebaseapp.com",
+  projectId: "school-voting-system-b3073",
+  storageBucket: "school-voting-system-b3073.firebasestorage.app",
+  messagingSenderId: "158037024387",
+  appId: "1:158037024387:web:07f05c6bd01a8d7c9e85b6"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.db = db;
+window.doc = doc;
+window.setDoc = setDoc;
+
+window.openVoting = async function(){
+
+    try{
+
+        await setDoc(
+            doc(db,"settings","voting"),
+            {
+                status:"open"
+            }
+        );
+
+        alert("✅ Voting Opened");
+
+    }catch(error){
+
+        console.error(error);
+        alert(error.message);
+
+    }
+
+}
+
+window.closeVoting = async function(){
+
+    try{
+
+        await setDoc(
+            doc(db,"settings","voting"),
+            {
+                status:"closed"
+            }
+        );
+
+        alert("🔴 Voting Closed");
+
+    }catch(error){
+
+        console.error(error);
+        alert(error.message);
+
+    }
+
+}
+
+if(!localStorage.getItem("votingStatus")){
+
+    localStorage.setItem("votingStatus","closed");
+
+}
+window.uploadExcel = function(){
+
+
+const file =
+    document.getElementById("candidateExcel").files[0];
+
+if(!file){
+    alert("Please select an Excel file.");
+    return;
+}
+
+document.getElementById("excelStatus").innerHTML =
+    "✅ Selected: " + file.name;
+
+const reader = new FileReader();
+
+reader.onload = function(e){
+
+    const data = new Uint8Array(e.target.result);
+
+    const workbook =
+        XLSX.read(data,{type:"array"});
+
+    const sheetName =
+        workbook.SheetNames[0];
+
+    const sheet =
+        workbook.Sheets[sheetName];
+
+    const candidates =
+        XLSX.utils.sheet_to_json(sheet);
+
+    localStorage.setItem(
+        "candidates",
+        JSON.stringify(candidates)
+    );
+
+    let html =
+    "<h3>Candidate Preview</h3>";
+
+    html +=
+    "<table border='1' cellpadding='8' style='border-collapse:collapse;width:100%'>";
+
+    html +=
+    "<tr><th>ID</th><th>Name</th><th>Position</th><th>Class</th></tr>";
+
+    candidates.forEach(function(c){
+
+        html +=
+        "<tr>" +
+        "<td>"+(c.ID || "")+"</td>" +
+        "<td>"+(c.Name || "")+"</td>" +
+        "<td>"+(c.Position || "")+"</td>" +
+        "<td>"+(c.Class || "")+"</td>" +
+        "</tr>";
+
+    });
+
+    html += "</table>";
+
+    document.getElementById(
+        "candidatePreview"
+    ).innerHTML = html;
+
+    alert(
+        candidates.length +
+        " candidates loaded successfully."
+    );
+
+};
+
+reader.readAsArrayBuffer(file);
+
+
+}
+
+
+window.uploadPhotos = function(){
+
+
+const files =
+    document.getElementById("candidatePhotos").files;
+
+if(files.length === 0){
+    alert("Please select candidate photos.");
+    return;
+}
+
+document.getElementById("photoStatus").innerHTML =
+    "✅ " + files.length + " photos selected.";
+
+let html = "";
+
+Array.from(files).forEach(function(file){
+
+    const imageURL =
+        URL.createObjectURL(file);
+
+    html +=
+    "<div style='text-align:center;width:120px;'>" +
+    "<img src='" + imageURL + "' style='width:100px;height:100px;object-fit:cover;border-radius:10px;border:1px solid #ccc;'><br>" +
+    "<small>" + file.name + "</small>" +
+    "</div>";
+
+});
+
+document.getElementById(
+    "photoPreview"
+).innerHTML = html;
+
+alert(
+    files.length +
+    " photos loaded successfully."
+);
+
+
+}
+
+
+loadAdminDashboard();
+
+async function loadAdminDashboard(){
+
+    const querySnapshot =
+    await getDocs(collection(db,"votes"));
+
+    const votes = [];
+
+    querySnapshot.forEach((doc)=>{
+
+        votes.push(doc.data());
+
+    });
+
+    document.getElementById("totalVotes").innerText =
+    votes.length;
+
+    let studentCount = 0;
+    let teacherCount = 0;
+    let coordinatorCount = 0;
+    let managementCount = 0;
+
+    votes.forEach(v=>{
+
+        if(v.voterType === "Student") studentCount++;
+        if(v.voterType === "Teacher") teacherCount++;
+        if(v.voterType === "Coordinator") coordinatorCount++;
+        if(v.voterType === "Management") managementCount++;
+
+    });
+
+    document.getElementById("studentVotes").innerText =
+    studentCount;
+
+    document.getElementById("teacherVotes").innerText =
+    teacherCount;
+
+    document.getElementById("coordinatorVotes").innerText =
+    coordinatorCount;
+
+    document.getElementById("managementVotes").innerText =
+    managementCount;
+
+    let categories = {
+    headBoy:{},
+    headGirl:{},
+    jrHeadBoy:{},
+    jrHeadGirl:{},
+    houseCaptain:{},
+    discipline:{},
+    sports:{},
+    peer:{}
+};
+
+votes.forEach(v=>{
+
+    if(v.headBoy)
+        categories.headBoy[v.headBoy] =
+        (categories.headBoy[v.headBoy] || 0) + 1;
+
+    if(v.headGirl)
+        categories.headGirl[v.headGirl] =
+        (categories.headGirl[v.headGirl] || 0) + 1;
+
+    if(v.jrHeadBoy)
+        categories.jrHeadBoy[v.jrHeadBoy] =
+        (categories.jrHeadBoy[v.jrHeadBoy] || 0) + 1;
+
+    if(v.jrHeadGirl)
+        categories.jrHeadGirl[v.jrHeadGirl] =
+        (categories.jrHeadGirl[v.jrHeadGirl] || 0) + 1;
+
+    if(v.houseCaptain){
+
+        v.houseCaptain.forEach(c=>{
+            categories.houseCaptain[c] =
+            (categories.houseCaptain[c] || 0) + 1;
+        });
+
+    }
+
+    if(v.discipline){
+
+        v.discipline.forEach(c=>{
+            categories.discipline[c] =
+            (categories.discipline[c] || 0) + 1;
+        });
+
+    }
+
+    if(v.sports){
+
+        v.sports.forEach(c=>{
+            categories.sports[c] =
+            (categories.sports[c] || 0) + 1;
+        });
+
+    }
+
+    if(v.peer){
+
+        v.peer.forEach(c=>{
+            categories.peer[c] =
+            (categories.peer[c] || 0) + 1;
+        });
+
+    }
+
+});
+
+let resultHtml = "";
+
+for(const [position,data] of Object.entries(categories)){
+
+    resultHtml +=
+    "<h3>" + position + "</h3>";
+
+    Object.entries(data)
+    .sort((a,b)=>b[1]-a[1])
+    .forEach(([candidate,count])=>{
+
+        resultHtml +=
+        candidate +
+        " : " +
+        count +
+        " votes<br>";
+
+    });
+
+    resultHtml += "<br>";
+
+}
+
+document.getElementById("adminResults").innerHTML =
+resultHtml;
+
+    let winnerHtml = "<h3>🏆 Final Winners</h3>";
+
+for(const [position,data] of Object.entries(categories)){
+
+    const winner =
+    Object.entries(data)
+    .sort((a,b)=>b[1]-a[1])[0];
+
+    if(winner){
+
+        winnerHtml +=
+        "<p><b>" +
+        position +
+        ":</b> " +
+        winner[0] +
+        " (" +
+        winner[1] +
+        " votes)</p>";
+
+    }
+
+}
+
+document.getElementById("winnerResults").innerHTML =
+winnerHtml;
+window.showVoteResults = function(){
+
+    document.getElementById("voteResultsSection").style.display = "block";
+
+    document.getElementById("liveVoteResults").innerHTML =
+    document.getElementById("adminResults").innerHTML;
+
+    document.getElementById("finalWinners").innerHTML =
+    document.getElementById("winnerResults").innerHTML;
+
+    window.scrollTo({
+        top: document.getElementById("voteResultsSection").offsetTop,
+        behavior: "smooth"
+    });
+
+}
+
+}
+
+
+window.resetElection = async function(){
+
+    if(!confirm("Are you sure you want to reset the election?")){
+        return;
+    }
+
+    try{
+
+        const querySnapshot =
+        await getDocs(collection(db,"votes"));
+
+        for(const voteDoc of querySnapshot.docs){
+
+            await deleteDoc(
+                doc(db,"votes",voteDoc.id)
+            );
+
+        }
+
+        localStorage.clear();
+
+        alert("Election data reset successfully.");
+
+        location.reload();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert("Reset Error: " + error.message);
+
+    }
+
+}
+
+window.exportExcel = async function(){
+
+    const querySnapshot =
+    await getDocs(collection(db,"votes"));
+
+    const votes = [];
+
+    querySnapshot.forEach((doc)=>{
+        votes.push(doc.data());
+    });
+
+    let results = {};
+
+    function countVote(position,candidate){
+
+        if(!candidate) return;
+
+        if(!results[position]){
+            results[position] = {};
+        }
+
+        results[position][candidate] =
+        (results[position][candidate] || 0) + 1;
+    }
+
+    votes.forEach(v=>{
+
+        countVote("Head Boy",v.headBoy);
+        countVote("Head Girl",v.headGirl);
+
+        countVote("Jr Head Boy",v.jrHeadBoy);
+        countVote("Jr Head Girl",v.jrHeadGirl);
+
+        (v.houseCaptain || []).forEach(c=>
+            countVote("House Captain",c)
+        );
+
+        (v.discipline || []).forEach(c=>
+            countVote("Discipline",c)
+        );
+
+        (v.sports || []).forEach(c=>
+            countVote("Sports Captain",c)
+        );
+
+        (v.peer || []).forEach(c=>
+            countVote("Peer Leader",c)
+        );
+
+    });
+
+    const excelData = [];
+
+    for(const position in results){
+
+        for(const candidate in results[position]){
+
+            excelData.push({
+                Position: position,
+                Candidate: candidate,
+                Votes: results[position][candidate]
+            });
+
+        }
+
+    }
+
+    const worksheet =
+    XLSX.utils.json_to_sheet(excelData);
+
+    const workbook =
+    XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(
+        workbook,
+        worksheet,
+        "Election Summary"
+    );
+
+    XLSX.writeFile(
+        workbook,
+        "ElectionSummary.xlsx"
+    );
+
+}
+
+document.getElementById("exportBtn").addEventListener("click", () => {
+    window.exportExcel();
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Election Results Dashboard</title>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+    color:#1e3a8a;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    margin:15px 0;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.result{
+    margin:8px 0;
+    font-size:18px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>
+SEVEN ELEVEN SCHOLASTIC SCHOOL
+<br>
+Student Council Election Results
+</h1>
+
+<div class="card">
+<h2>Head Boy Results</h2>
+<div id="headBoyResults"></div>
+</div>
+
+<div class="card">
+<h2>Head Girl Results</h2>
+<div id="headGirlResults"></div>
+</div>
+
+<div class="card">
+<h2>Jr Head Boy Results</h2>
+<div id="jrHeadBoyResults"></div>
+</div>
+
+<div class="card">
+<h2>Jr Head Girl Results</h2>
+<div id="jrHeadGirlResults"></div>
+</div>
+
+<div class="card">
+<h2>House Captain Results</h2>
+<div id="houseCaptainResults"></div>
+</div>
+
+<div class="card">
+<h2>Discipline Incharge Results</h2>
+<div id="disciplineResults"></div>
+</div>
+
+<div class="card">
+<h2>Sports Captain Results</h2>
+<div id="sportsResults"></div>
+</div>
+
+<div class="card">
+<h2>Peer Leader Results</h2>
+<div id="peerResults"></div>
+</div>
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getFirestore,
+    collection,
+    getDocs
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDYyTfXiJm1JY_HdAtMUUQCgsuOMVERGjE",
+  authDomain: "school-voting-system-b3073.firebaseapp.com",
+  projectId: "school-voting-system-b3073",
+  storageBucket: "school-voting-system-b3073.firebasestorage.app",
+  messagingSenderId: "158037024387",
+  appId: "1:158037024387:web:07f05c6bd01a8d7c9e85b6"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+if(localStorage.getItem("votingStatus") !== "closed"){
+
+    document.body.innerHTML =
+    "<h1 style='color:red;text-align:center;margin-top:100px;'>Results will be available after voting closes.</h1>";
+
+}
+else{
+
+    loadResults();
+
+}
+
+async function loadResults(){
+
+    try{
+
+        const querySnapshot =
+        await getDocs(collection(db,"votes"));
+
+    
+
+        const votes = [];
+
+        querySnapshot.forEach((doc) => {
+
+            votes.push(doc.data());
+        
+
+        });
+
+        function showResults(containerId, fieldName){
+
+            let results = {};
+
+            votes.forEach(function(v){
+
+                if(v[fieldName]){
+
+                    results[v[fieldName]] =
+                    (results[v[fieldName]] || 0) + 1;
+
+                }
+
+            });
+
+            let html = "";
+
+            Object.entries(results)
+            .sort((a,b) => b[1] - a[1])
+            .forEach(([candidate,count]) => {
+
+             html +=
+            "<div class='result'>" +
+             candidate +
+              " : " +
+                count +
+            " votes</div>";
+
+});
+
+            document.getElementById(containerId).innerHTML =
+            html || "No votes yet.";
+
+        }
+
+        function showArrayResults(containerId, fieldName){
+
+            let results = {};
+
+            votes.forEach(function(v){
+
+                if(v[fieldName] && Array.isArray(v[fieldName])){
+
+                    v[fieldName].forEach(function(candidate){
+
+                        results[candidate] =
+                        (results[candidate] || 0) + 1;
+
+                    });
+
+                }
+
+            });
+
+            let html = "";
+
+            Object.entries(results)
+            .sort((a,b) => b[1] - a[1])
+            .forEach(([candidate,count]) => {
+
+              html +=
+               "<div class='result'>" +
+                  candidate +
+              " : " +
+                 count +
+                " votes</div>";
+
+            });
+
+            document.getElementById(containerId).innerHTML =
+            html || "No votes yet.";
+
+        }
+
+        showResults("headBoyResults","headBoy");
+        showResults("headGirlResults","headGirl");
+        showResults("jrHeadBoyResults","jrHeadBoy");
+        showResults("jrHeadGirlResults","jrHeadGirl");
+
+        showArrayResults("houseCaptainResults","houseCaptain");
+        showArrayResults("disciplineResults","discipline");
+        showArrayResults("sportsResults","sports");
+        showArrayResults("peerResults","peer");
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert("Error loading results: " + error.message);
+
+    }
+
+}
+
+
+</script>
+
+</body>
+</html>

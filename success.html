@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vote Submitted</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.success-box{
+    background:rgba(255,255,255,0.96);
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 0 20px rgba(0,0,0,0.2);
+}
+
+.success-icon{
+    font-size:80px;
+    margin-bottom:20px;
+}
+
+.success-title{
+    font-size:36px;
+    color:#16a34a;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.success-message{
+    font-size:20px;
+    margin-bottom:20px;
+}
+
+.reference-box{
+    background:#f8fafc;
+    padding:15px;
+    border-radius:10px;
+    margin:20px 0;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.finish-btn{
+    background:#1e40af;
+    color:white;
+    border:none;
+    padding:15px 30px;
+    border-radius:10px;
+    font-size:18px;
+    cursor:pointer;
+}
+
+.finish-btn:hover{
+    opacity:0.9;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<img src="logo.png" alt="School Logo" class="logo">
+
+<div class="election-banner">
+VOTE COMPLETED
+</div>
+
+</div>
+
+<div class="success-box">
+
+<div class="success-icon">✅</div>
+
+<div class="success-title">
+Vote Submitted Successfully
+</div>
+
+<div class="success-message">
+Thank you for participating in the Student Council Election 2026.
+</div>
+
+<div class="reference-box" id="referenceNumber">
+Reference No: Loading...
+</div>
+
+<button class="finish-btn"
+onclick="window.location.href='index.html'">
+Back to Home
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+if(sessionStorage.getItem("voteSubmitted") !== "yes"){
+    window.location.href = "index.html";
+}
+
+const randomNumber =
+    "ELEC2026-" +
+    Math.floor(100000 + Math.random() * 900000);
+
+document.getElementById("referenceNumber").innerHTML =
+    "Reference No: " + randomNumber;
+
+</script>
+
+</body>
+</html>

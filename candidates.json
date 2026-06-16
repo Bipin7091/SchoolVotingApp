@@ -1,0 +1,625 @@
+[
+  {
+    "ID": "SESS00440",
+    "Name": "Zainab Khan/ Turf",
+    "Position": "Discipline Incharge",
+    "Class": "7C"
+  },
+  {
+    "ID": "SESS00548",
+    "Name": "Ritisha Viren Redkar/ Zephyr",
+    "Position": "Discipline Incharge",
+    "Class": "7C"
+  },
+  {
+    "ID": "SESS00426",
+    "Name": "Mysha Mirza Jaria/ Blaze",
+    "Position": "Discipline Incharge",
+    "Class": "7B"
+  },
+  {
+    "ID": "SESS00969",
+    "Name": "Kaavya sinha/ Blaze",
+    "Position": "Discipline Incharge",
+    "Class": "7B"
+  },
+  {
+    "ID": "SESS01529",
+    "Name": "Saara Narmawala/ Blaze",
+    "Position": "Discipline Incharge",
+    "Class": "7A"
+  },
+  {
+    "ID": "SESS01211",
+    "Name": "Preet Arora/ Blaze",
+    "Position": "Discipline Incharge",
+    "Class": "7B"
+  },
+  {
+    "ID": "SESS00938",
+    "Name": "Palvish Mehra/ Turf",
+    "Position": "Discipline Incharge",
+    "Class": "8A"
+  },
+  {
+    "ID": "SESS00899",
+    "Name": "Aaradhya Tiwari/ Zephyr",
+    "Position": "Discipline Incharge",
+    "Class": "7A"
+  },
+  {
+    "ID": "SESS01808",
+    "Name": "Vivan Mane/Zephyr",
+    "Position": "Sports Captain",
+    "Class": "7C"
+  },
+  {
+    "ID": "SESS01838",
+    "Name": "Aradhya Pandey/ Zephyr",
+    "Position": "Sports Captain",
+    "Class": "7A"
+  },
+  {
+    "ID": "SESS02241",
+    "Name": "Sakina bharmal/ Blaze",
+    "Position": "Sports Captain",
+    "Class": "8A"
+  },
+  {
+    "ID": "SESS00996",
+    "Name": "Vaani Pal/ Turf",
+    "Position": "Sports Captain",
+    "Class": "8C"
+  },
+  {
+    "ID": "SESS00505",
+    "Name": "Mannat kumari/ Splash",
+    "Position": "Sports Captain",
+    "Class": "8C"
+  },
+  {
+    "ID": "SESS01039",
+    "Name": "Diya Sutariya/ Turf ",
+    "Position": "Sports Captain",
+    "Class": "8C"
+  },
+  {
+    "ID": "SESS00526",
+    "Name": "Anjani Soni/ Splash",
+    "Position": "Sports Captain",
+    "Class": "8A"
+  },
+  {
+    "ID": "SESS00268",
+    "Name": "Reva Manish Punjabi/ Blaze",
+    "Position": "Sports Captain",
+    "Class": "8A"
+  },
+  {
+    "ID": "SESS00602",
+    "Name": "Vedant Mishra/ Blaze",
+    "Position": "Sports Captain",
+    "Class": "8C"
+  },
+  {
+    "ID": "SESS00411",
+    "Name": "Hadika Faraz Khan/ Zephyr",
+    "Position": "Sports Captain",
+    "Class": "8C"
+  },
+
+  {
+    "ID": "SESS00395",
+    "Name": "DAIWIK Shetty/ Zephyr",
+    "Position": "Sports Captain",
+    "Class": "8A"
+  },
+  {
+    "ID": "SESS01286",
+    "Name": "Aarav Rana/ Zephyr",
+    "Position": "Sports Captain",
+    "Class": "7A"
+  },
+  {
+    "ID": "SESS01701",
+    "Name": "Alishbah Siddiqui/ Splash",
+    "Position": "Sports Captain",
+    "Class": "8B"
+  },
+  {
+    "ID": "SESS00509",
+    "Name": "Pihu Kothari/ Splash",
+    "Position": "Sports Captain",
+    "Class": "7A"
+  },
+  {
+    "ID": "SESS00530",
+    "Name": "Aradhya Pathak/ Zephyr",
+    "Position": "Sports Captain",
+    "Class": "7A"
+  },
+  {
+    "ID": "SESS00663",
+    "Name": "Sarvottam Patel/ Turf",
+    "Position": "Sports Captain",
+    "Class": "8B"
+  },
+
+  {
+    "ID": "SESS00700",
+    "Name": "Ishna Yadav/BLAZE",
+    "Position": "House Captain",
+    "Class": "6B"
+  },
+  {
+    "ID": "SESS01409",
+    "Name": "Anjani Sharma /Zephyr",
+    "Position": "House Captain",
+    "Class": "6C"
+  },
+  {
+    "ID": "SESS01887",
+    "Name": "Aaradhya Parihar/Zephyr",
+    "Position": "House Captain",
+    "Class": "6A"
+  },
+  {
+    "ID": "SESS02041",
+    "Name": "Ruhi Sanjay Joshi/BLAZE",
+    "Position": "House Captain",
+    "Class": "6B"
+  },
+  {
+    "ID": "SESS02359",
+    "Name": "Aliza Ansar/Turf",
+    "Position": "House Captain",
+    "Class": "6C"
+  },
+  {
+    "ID": "SESS00710",
+    "Name": "Jasleen Negi/Splash",
+    "Position": "House Captain",
+    "Class": "6C"
+  },
+  {
+    "ID": "SESS02054",
+    "Name": "Aneri Parmar /Blaze",
+    "Position": "House Captain",
+    "Class": "6A"
+  },
+  {
+    "ID": "SESS00815",
+    "Name": "Himanshi Gupta /Splash",
+    "Position": "House Captain",
+    "Class": "6C"
+  },
+  {
+    "ID": "SESS01340",
+    "Name": "Arnav Pal/Zephyr",
+    "Position": "House Captain",
+    "Class": "6C"
+  },
+  {
+    "ID": "SESS02218",
+    "Name": "Advik Nath/Turf",
+    "Position": "House Captain",
+    "Class": "6A"
+  },
+  {
+    "ID": "SESS00979",
+    "Name": "Ansh kalra /Turf",
+    "Position": "House Captain",
+    "Class": "6C"
+  },
+  {
+    "ID": "SESS00669",
+    "Name": "Mishka savla/BLAZE",
+    "Position": "House Captain",
+    "Class": "6A"
+  },
+  {
+    "ID": "SESS00985",
+    "Name": "Adam Dilawar /Splash",
+    "Position": "House Captain",
+    "Class": "7B"
+  },
+  {
+    "ID": "SESS00440",
+    "Name": "Zainab Khan /Turf",
+    "Position": "House Captain",
+    "Class": "7C"
+  },
+  {
+    "ID": "SESS01808",
+    "Name": "Vivan Mane/Zephyr",
+    "Position": "House Captain",
+    "Class": "7C"
+  },
+  {
+    "ID": "SESS00530",
+    "Name": "Aaradhya Ajay Pathak /Zephyr",
+    "Position": "House Captain",
+    "Class": "7A"
+  },
+
+  {
+    "ID": "SESS00426",
+    "Name": "Mysha Mirza Jaria/BLAZE",
+    "Position": "House Captain",
+    "Class": "7B"
+  },
+  {
+    "ID": "SESS00969",
+    "Name": "Kaavya Sinha/BLAZE",
+    "Position": "House Captain",
+    "Class": "7B"
+  },
+  {
+    "ID": "SESS01037",
+    "Name": "Preksha Chand /Turf",
+    "Position": "House Captain",
+    "Class": "7A"
+  },
+  {
+    "ID": "SESS01286",
+    "Name": "Aarav Rana /Zephyr",
+    "Position": "House Captain",
+    "Class": "7A"
+  },
+  {
+    "ID": "SESS00662",
+    "Name": "Shivraj Patel/Turf",
+    "Position": "House Captain",
+    "Class": "7A"
+  },
+  {
+    "ID": "SESS00733",
+    "Name": "Yashvi More/Splash",
+    "Position": "House Captain",
+    "Class": "7B"
+  },
+  {
+    "ID": "SESS01889",
+    "Name": "Ayaan Puri /Splash",
+    "Position": "House Captain",
+    "Class": "6B"
+  },
+  {
+    "ID": "SESS02496",
+    "Name": "Mohammed Ali/BLAZE",
+    "Position": "House Captain",
+    "Class": "6B"
+  },
+  {
+    "ID": "SESS00985",
+    "Name": "Adam Dilawar ",
+    "Position": "Peer Leaders",
+    "Class": "7B"
+  },
+  {
+    "ID": "SESS02487",
+    "Name": "Pranay Singh ",
+    "Position": "Peer Leaders",
+    "Class": "7A"
+  },
+  {
+    "ID": "SESS00561",
+    "Name": "Reyaansh Negi ",
+    "Position": "Peer Leaders",
+    "Class": "7B"
+  },
+  {
+    "ID": "SESS00899",
+    "Name": "Aaradhya Tiwari ",
+    "Position": "Peer Leaders",
+    "Class": "7A"
+  },
+  {
+    "ID": "SESS00689",
+    "Name": "Prasham Kumar Prasad",
+    "Position": "Peer Leaders",
+    "Class": "7B"
+  },
+  {
+    "ID": "SESS00969",
+    "Name": "Kaavya sinha ",
+    "Position": "Peer Leaders",
+    "Class": "7B"
+  },
+  {
+    "ID": "SESS01231",
+    "Name": "Shourya pramodkumar Gupta ",
+    "Position": "Peer Leaders",
+    "Class": "7B"
+  },
+  {
+    "ID": "SESS01535",
+    "Name": "Priyanshi singh",
+    "Position": "Peer Leaders",
+    "Class": "7B"
+  },
+  {
+    "ID": "SESS01719",
+    "Name": "Vivaan Singh ",
+    "Position": "Peer Leaders",
+    "Class": "8B"
+  },
+  {
+    "ID": "SESS00996",
+    "Name": "Vaani Pal",
+    "Position": "Peer Leaders",
+    "Class": "8C"
+  },
+  {
+    "ID": "SESS01365",
+    "Name": "Trisha Khicha ",
+    "Position": "Peer Leaders",
+    "Class": "8B"
+  },
+  {
+    "ID": "SESS02006",
+    "Name": "Hallie",
+    "Position": "Peer Leaders",
+    "Class": "8B"
+  },
+  {
+    "ID": "SESS01247",
+    "Name": "Opal jain ",
+    "Position": "Peer Leaders",
+    "Class": "8A"
+  },
+  {
+    "ID": "SESS00279",
+    "Name": "Shirisha Paul ",
+    "Position": "Peer Leaders",
+    "Class": "8A"
+  },
+  {
+    "ID": "SESS00683",
+    "Name": "Parashie Bhaskar ",
+    "Position": "Peer Leaders",
+    "Class": "8B"
+  },
+  {
+    "ID": "SESS00196",
+    "Name": "Yashi Veda",
+    "Position": "head girl",
+    "Class": "9B"
+  },
+  {
+    "ID": "SESS01713",
+    "Name": "Kaina abbasi",
+    "Position": "head girl",
+    "Class": "9C"
+  },
+  {
+    "ID": "SESS01844",
+    "Name": "Yashi joshi",
+    "Position": "head girl",
+    "Class": "9A"
+  },
+  {
+    "ID": "SESS00138",
+    "Name": "Ebrahim Qureshi",
+    "Position": "head boy",
+    "Class": "9B"
+  },
+  {
+    "ID": "SESS00296",
+    "Name": "Haadiya iqbal",
+    "Position": "head girl",
+    "Class": "9C"
+  },
+  {
+    "ID": "SESS00427",
+    "Name": "Rajvir Sachin Mankame",
+    "Position": "head boy",
+    "Class": "9A"
+  },
+  {
+    "ID": "SESS00567",
+    "Name": "Divyanshi Gupta ",
+    "Position": "head girl",
+    "Class": "9C"
+  },
+  {
+    "ID": "SESS00142",
+    "Name": "Chaitya Chandresh Hariya ",
+    "Position": "head boy",
+    "Class": "9A"
+  },
+  {
+    "ID": "SESS00715",
+    "Name": "Soumya Mahesh Khadye ",
+    "Position": "head girl",
+    "Class": "9A"
+  },
+  {
+    "ID": "SESS02338",
+    "Name": "Vihaan Ahire",
+    "Position": "head boy",
+    "Class": "9C"
+  },
+  {
+    "ID": "SESS00199",
+    "Name": "Krishiv shah",
+    "Position": "head boy",
+    "Class": "9B"
+  },
+  {
+    "ID": "SESS01875",
+    "Name": "Maanav Upadhyay ",
+    "Position": "head boy",
+    "Class": "9C"
+  },
+  {
+    "ID": "SESS01595",
+    "Name": "Ammar Dilawar",
+    "Position": "Jr Head Boy",
+    "Class": "5A"
+  },
+  {
+    "ID": "SESS01006",
+    "Name": "Farhan Mallick",
+    "Position": "Jr Head Boy Afternoon",
+    "Class": "5D"
+  },
+
+  {
+    "ID": "SESS01010",
+    "Name": "Rovina Deanna Dsouza",
+    "Position": "Jr Head Girl",
+    "Class": "5A"
+  },
+  {
+    "ID": "SESS01490",
+    "Name": "Sonakshi nadar",
+    "Position": "Jr Head Girl",
+    "Class": "5B"
+  },
+  {
+    "ID": "SESS02271",
+    "Name": "Afia abdullah khan",
+    "Position": "Jr Head Girl",
+    "Class": "5B"
+  },
+  {
+    "ID": "SESS01712",
+    "Name": "Sai Hansitha Sobhirala",
+    "Position": "Jr Head Girl",
+    "Class": "5A"
+  },
+  {
+    "ID": "SESS01238",
+    "Name": "Ruwaid  Iqbal",
+    "Position": "Jr Head Boy",
+    "Class": "5A"
+  },
+   {
+    "ID": "SESS01558",
+    "Name": "Hriday Sanwal",
+    "Position": "jr head boy",
+    "Class": "5A"
+  },
+  {
+    "ID": "SESS01564",
+    "Name": "Naksh Rahul Sangoi",
+    "Position": "Jr Head Boy",
+    "Class": "5B"
+  },
+  {
+    "ID": "SESS02358",
+    "Name": "Fatima Hamid Ali",
+    "Position": "Jr Head Girl",
+    "Class": "5A"
+  },
+  {
+    "ID": "SESS01574",
+    "Name": "Aaradhya madhiwal",
+    "Position": "Jr Head Girl",
+    "Class": "5B"
+  },
+  {
+    "ID": "SESS00968",
+    "Name": "Roleen Sabharwal",
+    "Position": "Jr Head Girl Afternoon",
+    "Class": "5C"
+  },
+  {
+    "ID": "SESS02145",
+    "Name": "Ayesha Rizwan jahagirdar",
+    "Position": "Jr Head Girl Afternoon",
+    "Class": "5D"
+  },
+  {
+    "ID": "SESS01547",
+    "Name": "Aradhya Satyendra Singh",
+    "Position": "Jr Head Girl Afternoon",
+    "Class": "5D"
+  },
+  {
+    "ID": "SESS01274",
+    "Name": "Umair Akbar Farishta",
+    "Position": "Jr Head Boy",
+    "Class": "5A"
+  },
+  {
+    "ID": "SESS01550",
+    "Name": "Amina Barambia",
+    "Position": "Jr Head Girl",
+    "Class": "5A"
+  },
+  {
+    "ID": "SESS01219",
+    "Name": "Vedaansh Bhandary",
+    "Position": "Jr Head Boy Afternoon",
+    "Class": "5C"
+  },
+  {
+    "ID": "SESS01517",
+    "Name": "Prisha Stuti Jena",
+    "Position": "Jr Head Girl",
+    "Class": "5B"
+  },
+  {
+    "ID": "SESS01271",
+    "Name": "Disha Singh",
+    "Position": "Jr Head Girl Afternoon",
+    "Class": "5D"
+  },
+  {
+    "ID": "SESS02044",
+    "Name": "Hiti shivalkar",
+    "Position": "Jr Head Girl",
+    "Class": "5A"
+  },
+  {
+    "ID": "SESS01585",
+    "Name": "Saifuddin Abbas Mala",
+    "Position": "Jr Head Boy",
+    "Class": "5A"
+  },
+
+  {
+    "ID": "SESS01028",
+    "Name": "Dhanishka Negi",
+    "Position": "Jr Head Girl",
+    "Class": "5B"
+  },
+  {
+    "ID": "SESS02491",
+    "Name": "Vikramaditya Singh",
+    "Position": "Jr Head Boy",
+    "Class": "5A"
+  },
+  {
+    "ID": "SESS01511",
+    "Name": "Purvi Tiwari",
+    "Position": "Jr Head Girl Afternoon",
+    "Class": "5D"
+  },
+  {
+    "ID": "SESS00981",
+    "Name": "Sreenika Roy",
+    "Position": "Jr Head Girl",
+    "Class": "5A"
+  },
+  {
+    "ID": "SESS01040",
+    "Name": "Rishaan Kumar",
+    "Position": "Jr Head Boy",
+    "Class": "5A"
+  },
+  {
+    "ID": "SESS00983",
+    "Name": "Paridhi Sharma",
+    "Position": "Jr Head Girl Afternoon",
+    "Class": "5C"
+  },
+  {
+    "ID": "SESS01634",
+    "Name": "Devanshi Bhanushali",
+    "Position": "Jr Head Girl",
+    "Class": "5B"
+  }
+]

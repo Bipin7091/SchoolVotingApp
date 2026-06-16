@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voter Verification</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   <script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getFirestore,
+doc,
+getDoc
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDYyTfXiJm1JY_HdAtMUUQCgsuOMVERGjE",
+  authDomain: "school-voting-system-b3073.firebaseapp.com",
+  projectId: "school-voting-system-b3073",
+  storageBucket: "school-voting-system-b3073.firebasestorage.app",
+  messagingSenderId: "158037024387",
+  appId: "1:158037024387:web:07f05c6bd01a8d7c9e85b6"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const votingDoc = await getDoc(
+    doc(db,"settings","voting")
+);
+
+if(
+    !votingDoc.exists() ||
+    votingDoc.data().status !== "open"
+){
+    alert("Voting is not open yet.");
+    window.location.href = "index.html";
+}
+
+</script>
+</script>
+
+<div class="container">
+
+    <div class="header">
+
+        <img src="logo.png" alt="School Logo" class="logo">
+
+        <div class="election-banner">
+            VOTER VERIFICATION
+        </div>
+
+    </div>
+
+    <div class="form-box">
+
+        <h2>Verify Your Details</h2>
+
+        <label>Voter Type</label>
+        <select id="voterType">
+            <option value="">Select Voter Type</option>
+            <option value="Student">Student</option>
+            <option value="Teacher">Teacher</option>
+            <option value="Coordinator">Coordinator</option>
+            <option value="Management">Management</option>
+        </select>
+
+        <!-- Student Fields -->
+        <div id="studentFields" style="display:none;">
+
+            <p style="color:blue;font-weight:bold;">
+                Enter your Enrollment ID provided by the school.
+            </p>
+
+<p style="text-align:right;">
+<a href="#" id="findIdBtn">
+Don't know your Enrollment ID?
+</a>
+</p>
+
+
+            <input type="text"
+                id="enrollmentId"
+                placeholder="Enter Enrollment ID (Example: SESS001234)">
+
+            <div id="findIdBox" style="display:none; margin-top:15px;">
+
+            <select id="searchClass">
+            <option value="">Select Class</option>
+            </select>
+
+            <select id="searchStudent">
+            <option value="">Select Student</option>
+            </select>
+
+            <button type="button" id="getIdBtn">
+            Find Enrollment ID
+            </button>
+
+</div>
+
+            <input type="text"
+                id="studentName"
+                placeholder="Student Name"
+                readonly>
+
+            <input type="text"
+                id="studentClass"
+                placeholder="Class"
+                readonly>
+
+        </div>
+
+        <!-- Teacher Fields -->
+        <div id="teacherFields" style="display:none;">
+
+            <input type="text" id="teacherId" placeholder="Employee ID">
+
+            <input type="text" id="teacherName" placeholder="Teacher Name">
+
+        </div>
+
+        <!-- Coordinator Fields -->
+        <div id="coordinatorFields" style="display:none;">
+
+            <input type="text" id="coordinatorId" placeholder="Coordinator ID">
+
+            <input type="text" id="coordinatorName" placeholder="Coordinator Name">
+
+        </div>
+
+        <!-- Management Fields -->
+        <div id="managementFields" style="display:none;">
+
+            <select id="managementType">
+                <option value="">Select Management Type</option>
+                <option>Principal</option>
+                <option>Vice Principal</option>
+                <option>Supervisor</option>
+                <option>Trustee Ma'am</option>
+            </select>
+
+            <input type="text" id="managementName" placeholder="Name">
+
+        </div>
+
+        <button onclick="continueVoting()">Continue</button>
+
+    </div>
+
+</div>
+
+<script>
+
+const voterType = document.getElementById("voterType");
+
+voterType.addEventListener("change", function(){
+
+    document.getElementById("studentFields").style.display = "none";
+    document.getElementById("teacherFields").style.display = "none";
+    document.getElementById("coordinatorFields").style.display = "none";
+    document.getElementById("managementFields").style.display = "none";
+
+    if(this.value === "Student"){
+        document.getElementById("studentFields").style.display = "block";
+    }
+
+    if(this.value === "Teacher"){
+        document.getElementById("teacherFields").style.display = "block";
+    }
+
+    if(this.value === "Coordinator"){
+        document.getElementById("coordinatorFields").style.display = "block";
+    }
+
+    if(this.value === "Management"){
+        document.getElementById("managementFields").style.display = "block";
+    }
+
+});
+
+async function continueVoting(){
+
+    const type = document.getElementById("voterType").value;
+
+    if(type === ""){
+        alert("Please select Voter Type.");
+        return;
+    }
+
+    if(type === "Student"){
+
+    const id =
+document.getElementById("enrollmentId")
+.value
+.replace(/\s+/g,"")
+.toUpperCase();
+
+    if(id === ""){
+        alert("Please enter Enrollment ID.");
+        return;
+    }
+
+    const response =
+    await fetch("./students.json");
+
+    const data =
+    await response.json();
+
+    const students =
+    Object.values(data).flat();
+
+console.log("Entered ID:", id);
+
+console.log(
+students.slice(0,5).map(
+s => s["Enrollment No."]
+)
+);
+
+const student =
+students.find(
+s =>
+String(s["Enrollment No."])
+.replace(/\s+/g,"")
+.toUpperCase()
+===
+id.replace(/\s+/g,"")
+.toUpperCase()
+);
+
+    if(!student){
+
+        alert("Invalid Enrollment ID");
+        return;
+
+    }
+
+    document.getElementById("studentName").value =
+    student["Student Name"];
+
+    document.getElementById("studentClass").value =
+    student["column_3"];
+
+    localStorage.setItem(
+        "voterType",
+        "Student"
+    );
+
+    localStorage.setItem(
+    "voterId",
+    student["Enrollment No."]
+    );
+
+    localStorage.setItem(
+        "voterName",
+        student["Student Name"]
+    );
+
+    localStorage.setItem(
+        "voterClass",
+        student["column_3"]
+    );
+}
+
+
+    if(type === "Teacher"){
+
+        const id = document.getElementById("teacherId").value.trim();
+        const name = document.getElementById("teacherName").value.trim();
+
+        if(id === "" || name === ""){
+            alert("Please fill all Teacher details.");
+            return;
+        }
+
+        localStorage.setItem("voterType", "Teacher");
+        localStorage.setItem("voterId", id);
+        localStorage.setItem("voterName", name);
+    }
+
+    if(type === "Coordinator"){
+
+        const id = document.getElementById("coordinatorId").value.trim();
+        const name = document.getElementById("coordinatorName").value.trim();
+
+        if(id === "" || name === ""){
+            alert("Please fill all Coordinator details.");
+            return;
+        }
+
+        localStorage.setItem("voterType", "Coordinator");
+        localStorage.setItem("voterId", id);
+        localStorage.setItem("voterName", name);
+    }
+
+    if(type === "Management"){
+
+        const role = document.getElementById("managementType").value;
+        const name = document.getElementById("managementName").value.trim();
+
+        if(role === "" || name === ""){
+            alert("Please fill all Management details.");
+            return;
+        }
+
+        localStorage.setItem("voterType", "Management");
+        localStorage.setItem("managementRole", role);
+        localStorage.setItem("voterName", name);
+    }
+
+    window.location.href = "vote.html";
+}
+
+let allStudents = [];
+
+document.getElementById("findIdBtn").addEventListener("click", async () => {
+
+    document.getElementById("findIdBox").style.display = "block";
+
+    if(allStudents.length === 0){
+
+    const response = await fetch("./students.json");
+    const data = await response.json();
+
+    allStudents = Object.values(data).flat();
+
+    const classList = [...new Set(
+    allStudents.map(s => s.column_3)
+    )].sort();
+
+        const classDropdown =
+        document.getElementById("searchClass");
+
+        classList.forEach(cls => {
+
+            classDropdown.innerHTML +=
+            `<option value="${cls}">${cls}</option>`;
+
+        });
+    }
+
+});
+
+document.getElementById("searchClass").addEventListener("change", () => {
+
+    const selectedClass =
+    document.getElementById("searchClass").value;
+
+    const studentDropdown =
+    document.getElementById("searchStudent");
+
+    studentDropdown.innerHTML =
+    '<option value="">Select Student</option>';
+
+    allStudents
+    .filter(s => s.column_3 === selectedClass)
+    .forEach(student => {
+
+        studentDropdown.innerHTML +=
+        `<option value="${student["Enrollment No."]}">
+            ${student["Student Name"]}
+        </option>`;
+
+    });
+
+});
+
+document.getElementById("getIdBtn").addEventListener("click", () => {
+
+    const enrollmentId =
+    document.getElementById("searchStudent").value;
+
+    if(!enrollmentId){
+
+        alert("Please select student name.");
+        return;
+
+    }
+
+    document.getElementById("enrollmentId").value =
+    enrollmentId;
+
+    alert("Enrollment ID found and filled automatically.");
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review Your Vote</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.review-container{
+    background:rgba(255,255,255,0.96);
+    padding:30px;
+    border-radius:15px;
+    margin-top:20px;
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+}
+
+.review-title{
+    text-align:center;
+    font-size:32px;
+    margin-bottom:20px;
+    color:#0f172a;
+}
+
+.vote-section{
+    margin-bottom:20px;
+    padding:15px;
+    background:#f8fafc;
+    border-left:5px solid #1e40af;
+    border-radius:10px;
+}
+
+.vote-section h3{
+    margin:0 0 10px;
+}
+
+.action-buttons{
+    display:flex;
+    gap:15px;
+    margin-top:30px;
+}
+
+.action-buttons button{
+    flex:1;
+}
+
+.back-btn{
+    background:#6b7280;
+}
+
+.submit-btn{
+    background:#16a34a;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<img src="logo.png" alt="School Logo" class="logo">
+
+<div class="election-banner">
+REVIEW YOUR VOTE
+</div>
+
+</div>
+
+<div class="review-container">
+
+<div class="review-title">
+Please Confirm Your Selections
+</div>
+
+<div class="vote-section">
+<h3>👑 Head Boy</h3>
+<p id="reviewHeadBoy"></p>
+</div>
+
+<div class="vote-section">
+<h3>👑 Head Girl</h3>
+<p id="reviewHeadGirl"></p>
+</div>
+
+<div class="vote-section">
+<h3>👦 Jr Head Boy</h3>
+<p id="reviewJrHeadBoy"></p>
+</div>
+
+<div class="vote-section">
+<h3>👧 Jr Head Girl</h3>
+<p id="reviewJrHeadGirl"></p>
+</div>
+
+<div class="vote-section">
+<h3>🏠 House Captains</h3>
+<p id="houseCaptainReview"></p>
+</div>
+
+<div class="vote-section">
+<h3>📋 Discipline Incharge</h3>
+<p id="disciplineReview"></p>
+</div>
+
+<div class="vote-section">
+<h3>🏆 Sports Captains</h3>
+<p id="sportsReview"></p>
+</div>
+
+<div class="vote-section">
+<h3>🤝 Peer Leaders</h3>
+<p id="peerReview"></p>
+</div>
+
+<div style="text-align:center;margin-top:20px;">
+
+<p style="color:red;font-weight:bold;">
+⚠ Once submitted, your vote cannot be changed.
+</p>
+
+<label style="font-weight:bold;">
+<input type="checkbox" id="confirmVote">
+I confirm that all my selections are correct.
+</label>
+
+</div>
+
+<div class="action-buttons">
+
+<button class="back-btn"
+onclick="window.location.href='vote.html'">
+Edit Vote </button>
+
+<button class="submit-btn"
+onclick="submitVote()">
+Submit Vote </button>
+
+</div>
+
+</div>
+
+</div>
+
+<script type="module">
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    query,
+    where
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDYyTfXiJm1JY_HdAtMUUQCgsuOMVERGjE",
+  authDomain: "school-voting-system-b3073.firebaseapp.com",
+  projectId: "school-voting-system-b3073",
+  storageBucket: "school-voting-system-b3073.firebasestorage.app",
+  messagingSenderId: "158037024387",
+  appId: "1:158037024387:web:07f05c6bd01a8d7c9e85b6"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+document.getElementById("reviewHeadBoy").innerText =
+localStorage.getItem("headBoy") || "Not Selected";
+
+document.getElementById("reviewHeadGirl").innerText =
+localStorage.getItem("headGirl") || "Not Selected";
+
+document.getElementById("reviewJrHeadBoy").innerText =
+localStorage.getItem("jrHeadBoy") || "Not Selected";
+
+document.getElementById("reviewJrHeadGirl").innerText =
+localStorage.getItem("jrHeadGirl") || "Not Selected";
+
+document.getElementById("houseCaptainReview").innerText =
+JSON.parse(
+localStorage.getItem("houseCaptain") || "[]"
+).join(", ");
+
+document.getElementById("disciplineReview").innerText =
+JSON.parse(
+localStorage.getItem("discipline") || "[]"
+).join(", ");
+
+document.getElementById("sportsReview").innerText =
+JSON.parse(
+localStorage.getItem("sports") || "[]"
+).join(", ");
+
+document.getElementById("peerReview").innerText =
+JSON.parse(
+localStorage.getItem("peer") || "[]"
+).join(", ");
+
+window.submitVote = async function(){
+
+    const confirmVote =
+    document.getElementById("confirmVote");
+
+    if(!confirmVote.checked){
+
+        alert("Please confirm your selections before submitting.");
+        return;
+    }
+
+    const voterId =
+    localStorage.getItem("voterId");
+
+    const q =
+    query(
+        collection(db,"votes"),
+        where("voterId","==",voterId)
+    );
+
+    try{
+
+        const existingVotes =
+        await getDocs(q);
+
+        if(!existingVotes.empty){
+
+            alert("You have already voted.");
+            return;
+        }
+
+        await addDoc(
+            collection(db,"votes"),
+            {
+
+                voterId: localStorage.getItem("voterId"),
+                voterName: localStorage.getItem("voterName"),
+                voterType: localStorage.getItem("voterType"),
+
+                headBoy: localStorage.getItem("headBoy"),
+                headGirl: localStorage.getItem("headGirl"),
+
+                jrHeadBoy: localStorage.getItem("jrHeadBoy"),
+                jrHeadGirl: localStorage.getItem("jrHeadGirl"),
+
+                houseCaptain: JSON.parse(localStorage.getItem("houseCaptain") || "[]"),
+                discipline: JSON.parse(localStorage.getItem("discipline") || "[]"),
+                sports: JSON.parse(localStorage.getItem("sports") || "[]"),
+                peer: JSON.parse(localStorage.getItem("peer") || "[]"),
+
+                timestamp: new Date()
+            }
+        );
+
+        alert("Vote Submitted Successfully");
+
+        sessionStorage.setItem(
+        "voteSubmitted",
+        "yes"
+        );
+
+        window.location.href =
+        "success.html";
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+        "Firebase Error: " +
+        error.message
+        );
+
+    }
+
+}
+    
+</script>
+
+</body>
+</html>
