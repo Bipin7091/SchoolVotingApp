@@ -72,3 +72,39 @@ Hosted using Firebase Hosting.
 
 Live URL:
 https://school-voting-system-b3073.web.app
+
+
+## 📸 Project Screenshots
+
+### Student Voting Portal
+
+#### Voter Verification Page
+
+![Voter Verification](screenshots/voting-page/verification-page.png)
+
+#### Voting Interface
+
+![Voting Interface](screenshots/voting-page/voting-page.png)
+
+---
+
+### Admin Portal
+
+#### Admin Login
+
+![Admin Login](screenshots/admin-page/admin-login.png)
+
+#### Admin Dashboard
+
+![Admin Dashboard](screenshots/admin-page/admin-dashboard.png)
+
+This platform was successfully used during a real school election involving students, teachers, coordinators, and management members.
+
+## 🏆 Project Highlights
+
+* Developed a complete end-to-end election management platform.
+* Implemented role-based voting workflows.
+* Integrated Firebase Firestore for secure data storage.
+* Deployed and managed a live production system.
+* Used in an actual school election event.
+
