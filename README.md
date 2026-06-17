@@ -66,6 +66,13 @@ Designed, developed, tested, deployed, and managed the complete election platfor
 GitHub Profile:
 https://github.com/Bipin7091
 
+Repository:
+https://github.com/Bipin7091/SchoolVotingApp
+
+## 📈 Real World Usage
+
+This platform was successfully used during a real school election event involving students, teachers, coordinators, and management members.
+
 ## 🚀 Deployment
 
 Hosted using Firebase Hosting.
